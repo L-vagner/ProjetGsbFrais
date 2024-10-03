@@ -15,7 +15,7 @@ class ServiceFrais
             $lesFrais = DB::table('frais')
                 ->select()
                 ->where('id_visiteur', '=', $id)
-                ->first();
+                ->get();
             return $lesFrais;
 
         } catch (QueryException $e) {
