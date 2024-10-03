@@ -16,7 +16,7 @@ class FraisController extends Controller
             $id = Session::get('id');
             $serviceFrais = new ServiceFrais();
             $mesFrais = $serviceFrais->getFrais($id);
-            return view('vues/listeFrais', compact('mesFrais'));
+            return view('vues/listeFrais', compact('mesFrais', 'erreur'));
         } catch (Exception $e) {
             $erreur = $e->getMessage();
             return view('vues/error', compact('erreur'));
