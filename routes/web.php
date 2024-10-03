@@ -23,3 +23,7 @@ Route::post('/login', 'App\Http\Controllers\VisiteurControlleur@signIn');
 Route::get('/getLogin', 'App\Http\Controllers\VisiteurControlleur@signOut');
 
 Route::get('/getListeFrais', 'App\Http\Controllers\FraisController@getFraisVisiteur');
+
+Route::get('/modifierFrais/{id}', 'App\Http\Controllers\FraisController');
+
+Route::get('/validerFrais', 'App\Http\Controllers\FraisController@updateFrais');

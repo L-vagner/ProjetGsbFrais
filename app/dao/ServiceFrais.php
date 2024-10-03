@@ -22,4 +22,32 @@ class ServiceFrais
             throw new MonException($e->getMessage(), 5);
         }
     }
+
+    public function getById($id_frais)
+    {
+        try {
+            $frais = DB::table('frais')
+                ->select()
+                ->where('id_frais', '=', $id_frais)
+                ->first();
+            return $frais;
+        } catch (QueryException $e) {
+            throw new MonException($e->getMessage(), 5);
+        }
+    }
+
+    public function updateFrais($id_frais, $anneemois, $nbjustificatifs)
+    {
+        try {
+            $aujourdhui = date("Y-m-d");
+            DB::table('frais')
+
+                ->where('id_frais', '=', $id_frais)
+                ->update(['datemodification'=>$aujourdhui,
+                    'anneemois'=>$anneemois,
+                    'nbjustificatifs'=>$nbjustificatifs]);
+        } catch (QueryException $e) {
+            throw new MonException($e->getMessage(), 5);
+        }
+    }
 }
