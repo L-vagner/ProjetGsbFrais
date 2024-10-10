@@ -29,3 +29,7 @@ Route::get('/modifierFrais/{id}', 'App\Http\Controllers\FraisController@updateFr
 Route::post('/validerFrais', 'App\Http\Controllers\FraisController@validateFrais');
 
 Route::get('/ajouterFrais', 'App\Http\Controllers\FraisController@addFrais');
+
+Route::get('/supprimerFrais/{id}','App\Http\Controllers\FraisController@removeFrais');
+
+Route::get('/supprimerFrais/full/{id}','App\Http\Controllers\FraisController@removeFrais');

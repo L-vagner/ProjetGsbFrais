@@ -12,7 +12,9 @@ class FraisController extends Controller
 {
     public function getFraisVisiteur()
     {
-        $erreur = "";
+
+        $erreur = Session::get('erreur');
+        Session::forget('erreur');
         try {
             $id = Session::get('id');
             $serviceFrais = new ServiceFrais();
@@ -42,12 +44,15 @@ class FraisController extends Controller
     {
         $erreur = "";
         try {
-            $id_frais = $request->input('idfrais');
+            $id_frais = $request->input('id_frais');
             $anneemois = $request->input('anneemois');
             $nbjustificatifs = $request->input('nbjustificatifs');
             $serviceFrais = new ServiceFrais();
             if ($id_frais > 0) {
                 $serviceFrais->updateFrais($id_frais, $anneemois, $nbjustificatifs);
+            } else {
+                $id_visiteur = Session::get('id');
+                $serviceFrais->insertFrais($id_visiteur, $anneemois, $nbjustificatifs);
             }
             return redirect('/getListeFrais');
         } catch (Exception $e) {
@@ -63,11 +68,34 @@ class FraisController extends Controller
             $unFrais = new Frais();
             $unFrais->id_frais = 0;
             $titreVue  = "Création d'une fiche de frais";
-            return view('vues/formFrais', compact('unFrais', 'titreVue'));
+            return view('vues/formFrais', compact('unFrais', 'titreVue', 'erreur'));
 
         } catch (Exception $e) {
             $erreur = $e->getMessage();
             return view('vues/error', compact('erreur'));
+        }
+    }
+
+    public function removeFrais($id_frais)
+    {
+        $erreur = "";
+        try {
+            $serviceFrais = new ServiceFrais();
+            $serviceFrais->deleteFrais($id_frais);
+        } catch (Exception $e) {
+            Session::put('erreur', $e->getMessage());
+        }
+        return redirect('/getListeFrais');
+    }
+
+    public function removeFraisFull($id_frais)
+    {
+        $erreur = "";
+        try {
+            $serviceFrais = new ServiceFrais();
+            $serviceFrais->deleteFraisFull($id_frais);
+        } catch (Exception $e) {
+            Session::put('erreur', $e->getMessage());
         }
     }
 }

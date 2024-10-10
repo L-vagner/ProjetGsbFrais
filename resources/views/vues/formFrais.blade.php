@@ -2,20 +2,20 @@
 @section('content')
 {!! Form::open(['url' => '/validerFrais']) !!}
 <div class="col-md-12  col-sm-12 well well-md">
-    <h1>Modification d'une fiche de frais</h1>
+    <h1>{{$titreVue}}</h1>
     <div class="form-horizontal">
         <input type="hidden" name="id_frais" value="{{$unFrais->id_frais}}"/>
         <div class="form-group">
             <label class="col-md-3 col-sm-3 control-label">Période : </label>
             <div class="col-md-2 col-sm-2">
-                <input type="text" name="anneemois" value="{{$unFrais->anneemois}}" class="form-control" placeholder="AAAA-MM" required autofocus>
+                <input type="text" name="anneemois" value="{{$unFrais->anneemois}}" class="form-control" placeholder="AAAA-MM" maxlength=7 required autofocus>
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-md-3 col-sm-3 control-label">Nb justificatifs : </label>
             <div class="col-md-2  col-sm-2">
-                <input type="number" name="nbjustificatifs" value="{{$unFrais->nbjustificatifs}}"  class="form-control" placeholder="Nombre de justificatifs" required>
+                <input type="number" name="nbjustificatifs" min="0" value="{{$unFrais->nbjustificatifs}}"  class="form-control" placeholder="Nombre de justificatifs" required>
             </div>
         </div>
         <div class="form-group">
@@ -41,7 +41,7 @@
             </div>
         </div>
         <div class="col-md-6 col-md-offset-3  col-sm-6 col-sm-offset-3">
-
+        @include('vues/error')
         </div>
     </div>
 </div>

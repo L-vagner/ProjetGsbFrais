@@ -20,12 +20,21 @@
                     </a>
                 </td>
                 <td style="text-align:center;">
+                    @if()
                     <a onclick="javascript:if (confirm('Suppression confirmée ?')) {
                     window.location='{{url('/supprimerFrais')}}/{{$frais->id_frais}}'
 					}">
                         <span class="glyphicon glyphicon-remove" data-toggle="tooltip" data-placement="top"
                               title="Supprimer"></span>
                     </a>
+                    @else
+                        <a onclick="javascript:if (confirm('Supprimer la fiches et tous les frais liés ?')) {
+                    window.location='{{url('/supprimerFrais')}}/full/{{$frais->id_frais}}'
+					}">
+                        <span class="glyphicon glyphicon-remove" data-toggle="tooltip" data-placement="top"
+                              title="Supprimer"></span>
+                        </a>
+                    @endif
                 </td>
             </tr>
         @endforeach
