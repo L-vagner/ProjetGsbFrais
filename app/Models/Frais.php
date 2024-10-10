@@ -10,4 +10,5 @@ class Frais extends Model
     protected $table = "frais";
     protected $primaryKey = "id_frais";
     public $timestamps = false;
+    public int $id_frais;
 }

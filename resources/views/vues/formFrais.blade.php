@@ -1,8 +1,8 @@
 @extends('layouts.master')
 @section('content')
-{!! Form::open(['url' => '/validerFrais ']) !!}
+{!! Form::open(['url' => '/validerFrais']) !!}
 <div class="col-md-12  col-sm-12 well well-md">
-    <h1> </h1>
+    <h1>Modification d'une fiche de frais</h1>
     <div class="form-horizontal">
         <input type="hidden" name="id_frais" value="{{$unFrais->id_frais}}"/>
         <div class="form-group">
