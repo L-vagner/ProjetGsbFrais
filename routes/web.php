@@ -32,4 +32,7 @@ Route::get('/ajouterFrais', 'App\Http\Controllers\FraisController@addFrais');
 
 Route::get('/supprimerFrais/{id}','App\Http\Controllers\FraisController@removeFrais');
 
-Route::get('/supprimerFrais/full/{id}','App\Http\Controllers\FraisController@removeFrais');
+Route::get('/supprimerFrais/full/{id}','App\Http\Controllers\FraisController@removeFraisFull');
+
+Route::get('/getListeFraisHF/{id}', 'App\Http\Controllers\FraisHFController@getFraisHF')->name('listeFraisHF');
+

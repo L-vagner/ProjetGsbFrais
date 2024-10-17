@@ -20,7 +20,7 @@
                     </a>
                 </td>
                 <td style="text-align:center;">
-                    @if()
+                    @if(!($frais->id_frais == $id_frais_erreur))
                     <a onclick="javascript:if (confirm('Suppression confirmée ?')) {
                     window.location='{{url('/supprimerFrais')}}/{{$frais->id_frais}}'
 					}">
