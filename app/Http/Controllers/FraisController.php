@@ -10,23 +10,25 @@ use Exception;
 
 class FraisController extends Controller
 {
-    public function getFraisVisiteur()
+    public function getFraisVisiteur() // renvoie la page liste frais avec les frais du visiteur
     {
 
         $erreur = Session::get('erreur');
         Session::forget('erreur');
+        $id_frais_erreur = Session::get('id_frais_erreur');
+        Session::forget('id_frais_erreur');
         try {
             $id = Session::get('id');
             $serviceFrais = new ServiceFrais();
             $mesFrais = $serviceFrais->getFrais($id);
-            return view('vues/listeFrais', compact('mesFrais', 'erreur'));
+            return view('vues/listeFrais', compact('mesFrais', 'erreur', 'id_frais_erreur'));
         } catch (Exception $e) {
             $erreur = $e->getMessage();
             return view('vues/error', compact('erreur'));
         }
     }
 
-    public function updateFrais($id_Frais) //mets a jour un frais
+    public function updateFrais($id_Frais) //renvoie le formulaire de frais frais avec les informations pré-remplie et l'id non égale a 0
     {
         $erreur = "";
         try {
@@ -40,7 +42,7 @@ class FraisController extends Controller
         }
     }
 
-    public function validateFrais(Request $request) //
+    public function validateFrais(Request $request) // effectue la modfication de frais
     {
         $erreur = "";
         try {
@@ -61,13 +63,13 @@ class FraisController extends Controller
         }
     }
 
-    public function addFrais()
+    public function addFrais() //renvoie le formulaire de frais avec aucune information pré-rempli et l'id a 0
     {
         $erreur = "";
         try {
             $unFrais = new Frais();
             $unFrais->id_frais = 0;
-            $titreVue  = "Création d'une fiche de frais";
+            $titreVue = "Création d'une fiche de frais";
             return view('vues/formFrais', compact('unFrais', 'titreVue', 'erreur'));
 
         } catch (Exception $e) {
@@ -76,19 +78,20 @@ class FraisController extends Controller
         }
     }
 
-    public function removeFrais($id_frais)
+    public function removeFrais($id_frais) // supprime un frais et renvoie la page listeFrais, ne marche pas pour frais avec dépendances
     {
         $erreur = "";
         try {
             $serviceFrais = new ServiceFrais();
             $serviceFrais->deleteFrais($id_frais);
         } catch (Exception $e) {
+            Session::put('id_frais_erreur', $id_frais);
             Session::put('erreur', $e->getMessage());
         }
         return redirect('/getListeFrais');
     }
 
-    public function removeFraisFull($id_frais)
+    public function removeFraisFull($id_frais) // supprime un frais et ses dépendances de fraishorsforfait, renvoie la page listeFraisp a
     {
         $erreur = "";
         try {
@@ -97,5 +100,6 @@ class FraisController extends Controller
         } catch (Exception $e) {
             Session::put('erreur', $e->getMessage());
         }
+        return redirect('/getListeFrais');
     }
 }
