@@ -17,12 +17,12 @@
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-md-6 col-md-3">
-                    <button type="submit" class="btn btn-default btn-primary"><span class="glyphicon glyphicon-log-in"></span>Valider</button>
+                <div class="col-md-6 col-md-offset-3 col-md-3">
+                    <button type="submit" class="btn btn-default btn-primary"><span class="glyphicon glyphicon-log-in"></span> Valider</button>
                 </div>
             </div>
             <div class="col-md-6 col-md-offset-3">
-                @include('vues\error')
+                @include('vues/error')
             </div>
         </div>
     </div>

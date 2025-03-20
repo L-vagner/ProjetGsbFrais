@@ -16,7 +16,7 @@
                 <td>{{$fraisHF->lib_fraishorsforfait}}</td>
                 <td>{{$fraisHF->montant_fraishorsforfait}}</td>
                 <td style="text-align:center;">
-                    <a href="{{'/modifierFraisHF'}}/{{$fraisHF->id_frais}}">
+                    <a href="{{route('modifierFraisHF', $fraisHF->id_fraishorsforfait)}}">
                     <span class="glyphicon glyphicon-pencil" data-toggle="tooltip" data-placement="top"
                           title="Modifier">
                     </span>
@@ -24,7 +24,7 @@
                 </td>
                 <td style="text-align:center;">
                     <a onclick="javascript:if (confirm('Suppression confirmée ?')) {
-                        window.location='{{url('/supprimerFraisHF')}}/{{$fraisHF->id_frais}}'
+                        window.location='{{url('/supprimerFraisHF')}}/{{$fraisHF->id_fraishorsforfait}}'
                     }">
                         <span class="glyphicon glyphicon-remove" data-toggle="tooltip" data-placement="top"
                               title="Supprimer"></span>
@@ -40,8 +40,8 @@
     </table>
     @include('vues/error')
     <div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3">
-            <a href="#"><button type="button" class="btn btn-default btn-primary"><span class="glyphicon glyphicon-plus"></span> Ajouter</button></a>
-            <a href="#"><button type="button" class="btn btn-default btn-primary"><span class="glyphicon glyphicon-check"></span> Valider les montants</button></a>
+            <a href="{{url('/ajouterFraisHF/'.$mesFraisHF[0]->id_frais)}}"><button type="button" class="btn btn-default btn-primary"><span class="glyphicon glyphicon-plus"></span> Ajouter</button></a>
+            <a href="{{url('/confirmerFraisHF/'.$mesFraisHF[0]->id_frais)}}"><button type="button" class="btn btn-default btn-primary"><span class="glyphicon glyphicon-check"></span> Valider les montants</button></a>
             <a href="{{url('/modifierFrais/'.$mesFraisHF[0]->id_frais)}}"><button type="button" class="btn btn-default btn-primary"><span class="glyphicon glyphicon-remove"></span> Annuler</button></a>
     </div>
     </div>

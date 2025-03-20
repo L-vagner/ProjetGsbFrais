@@ -90,4 +90,15 @@ class ServiceFrais
             throw new MonException($erreur, 5);
         }
     }
+
+    public function confirmFraisHF($id_frais, $montant)
+    {
+        try {
+            DB::table('frais')
+                ->where('id_frais', '=', $id_frais)
+                ->update(['montantvalide' => $montant]);
+        } catch (QueryException $e) {
+            throw new MonException($e->getMessage(), 5);
+        }
+    }
 }
