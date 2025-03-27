@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Session;
 use App\dao\ServiceVisiteur;
 use Exception;
 
-class VisiteurControlleur extends Controller
+class VisiteurController extends Controller
 {
     public function getLogin()
     {

@@ -2,6 +2,6 @@
 @section('content')
 
     <div>
-        <h1 class="bvn">Gestion des frais de déplacements</h1>
+        <h1 class="bvn">Gestion des médicaments</h1>
     </div>
 @stop

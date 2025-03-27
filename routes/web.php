@@ -16,11 +16,11 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/formLogin', 'App\Http\Controllers\VisiteurControlleur@getLogin');
+Route::get('/formLogin', 'App\Http\Controllers\VisiteurController@getLogin');
 
-Route::post('/login', 'App\Http\Controllers\VisiteurControlleur@signIn');
+Route::post('/login', 'App\Http\Controllers\VisiteurController@signIn');
 
-Route::get('/getLogin', 'App\Http\Controllers\VisiteurControlleur@signOut');
+Route::get('/getLogin', 'App\Http\Controllers\VisiteurController@signOut');
 
 Route::get('/getListeFrais', 'App\Http\Controllers\FraisController@getFraisVisiteur');
 
@@ -45,3 +45,11 @@ Route::get('/ajouterFraisHF/{id}', 'App\Http\Controllers\FraisHFController@addFr
 Route::get('/supprimerFraisHF/{idHF}', 'App\Http\Controllers\FraisHFController@removeFraisHF');
 
 Route::get('/confirmerFraisHF/{id}', 'App\Http\Controllers\FraisHFController@confirmerFraisHF');
+
+Route::get('/findCompoMed', 'App\Http\Controllers\MedicamentController@rechercheMedicaments');
+
+Route::post('/getCompoMed', 'App\Http\Controllers\MedicamentController@afficheCompoMed');
+
+Route::get('/modifierCompoMed/{idMed}', 'App\Http\Controllers\MedicamentController@updateCompoMed')->name('modifierCompoMed');
+
+Route::post('/validerCompo', 'App\Http\Controllers\MedicamentController@validateCompoMed');
