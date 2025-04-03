@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use App\Models\Composant;
 
 class Medicament extends Model
 {
@@ -12,7 +12,7 @@ class Medicament extends Model
     protected $primaryKey = 'id_medicament';
     public $timestamps = false;
 
-    public function composants():BelongsToMany
+    public function composants(): BelongsToMany
     {
         return $this->belongsToMany(Composant::class,
             'constituer',
@@ -21,11 +21,16 @@ class Medicament extends Model
             ->withPivot('qte_composant');
     }
 
+    public function famille(): BelongsTo
+    {
+        return $this->belongsTo(Famille::class, 'id_famille');
+    }
+
     public function updateQteComposant($composants)
     {
-        foreach ($composants as $id_compo=> $qte)
-        {
+        foreach ($composants as $id_compo => $qte) {
             if ($qte <= 0) continue;
+
             $this->composants()->syncWithoutDetaching([$id_compo => ['qte_composant' => $qte]]);
         }
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\dao\ServiceMedicament;
+use App\Models\Medicament;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Exception;
@@ -24,11 +25,11 @@ class MedicamentController extends Controller
 
     }
 
-    public function afficheCompoMed(Request $request)
+    public function afficheCompoMed()
     {
+        $id_med = $_GET['id_med'];
         $erreur = Session::get('erreur');
         Session::forget('erreur');
-        $id_med = $request->input('id_med');
         try {
             $serviceMedicament = new ServiceMedicament();
             $medicament = $serviceMedicament->getMedicamentById($id_med);
@@ -105,6 +106,19 @@ class MedicamentController extends Controller
             $composants = $medicament->composants;
             return view('vues/listeCompo', compact('medicament', 'composants', 'erreur'));
 
+        } catch (Exception $e) {
+            $erreur = $e->getMessage();
+            return view('vues/error', compact('erreur'));
+        }
+    }
+
+    public function getMedicaments()
+    {
+        $erreur = Session::get('erreur');
+        Session::forget('erreur');
+        try {
+            $mesMedocs = Medicament::all();
+            return view('vues/listeMedoc', compact('mesMedocs', 'erreur'));
         } catch (Exception $e) {
             $erreur = $e->getMessage();
             return view('vues/error', compact('erreur'));

@@ -34,7 +34,7 @@
                     </button>
                     &nbsp;
                     <button type="button" class="btn btn-default btn-primary"
-                            onclick="javascript: window.location = '/findCompoMed';">
+                            onclick="javascript: window.location = '/getCompoMed?id_med={{$id_med}}';">
                         <span class="glyphicon glyphicon-remove"></span> Annuler
                     </button>
                 </div>

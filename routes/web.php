@@ -23,14 +23,16 @@ Route::post('/login', 'App\Http\Controllers\VisiteurController@signIn');
 
 Route::get('/getLogin', 'App\Http\Controllers\VisiteurController@signOut');
 
-Route::get('/findCompoMed', 'App\Http\Controllers\MedicamentController@rechercheMedicaments');
+Route::get('/findCompoMed', [MedicamentController::class, 'rechercheMedicaments']);
 
-Route::post('/getCompoMed', 'App\Http\Controllers\MedicamentController@afficheCompoMed');
+Route::get('/getCompoMed', [MedicamentController::class, 'afficheCompoMed']);
 
-Route::get('/modifierCompoMed/{idMed}', 'App\Http\Controllers\MedicamentController@updateCompoMed')->name('modifierCompoMed');
+Route::get('/modifierCompoMed/{idMed}', [MedicamentController::class, 'updateCompoMed'])->name('modifierCompoMed');
 
-Route::post('/validerCompo', 'App\Http\Controllers\MedicamentController@validateCompoMed');
+Route::post('/validerCompo', [MedicamentController::class, 'validateCompoMed']);
 
-Route::get('/ajouterCompoMed/{idMed}', 'App\Http\Controllers\MedicamentController@addCompoMed')->name('ajouterCompoMed');
+Route::get('/ajouterCompoMed/{idMed}', [MedicamentController::class, 'addCompoMed'])->name('ajouterCompoMed');
 
 Route::get('/supprimerCompoMed/{idMed}/{idCompo}', [MedicamentController::class, 'removeCompoMed'])->name('supprimerCompoMed');
+
+Route::get('/getMedicaments', [MedicamentController::class, 'getMedicaments']);

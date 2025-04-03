@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('content')
-    {!! Form::open(['url'=>'/getCompoMed']) !!}
+    {!! Form::open(['url'=>'/getCompoMed', 'method'=>'get']) !!}
     <div class="col-md-12 well well-md">
         <h1>Recherche composants de médicament</h1>
         <div class="form-horizontal">

@@ -25,17 +25,23 @@
             @if (Session::get('id') == 0)
                 <div class="collapse navbar-collapse" id="navbar-collapse-target">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="{{url('/formLogin')}}" data-toggle="collapse" data-target=".navbar-collapse.in">Se connecter</a></li>
+                        <li><a href="{{url('/formLogin')}}" data-toggle="collapse" data-target=".navbar-collapse.in">Se
+                                connecter</a></li>
                     </ul>
                 </div>
             @else
                 <div class="collapse navbar-collapse" id="navbar-collapse-target">
                     <ul class="nav navbar-nav">
-                        <li><a href="/findCompoMed" data-toggle="collapse" data-target=".navbar-collapse.in">Compositions</a></li>
-                        <li><a></a></li>
+                        <li>
+                            <a href="/getMedicaments" data-toggle="collapse" data-target=".navbar-collapse.in">Medicaments</a>
+                        </li>
+                        <li>
+                            <a href="/findCompoMed" data-toggle="collapse" data-target=".navbar-collapse.in">Compositions</a>
+                        </li>
                     </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="/getLogin" data-toggle="collapse" data-target=".navbar-collapse.in">({{Session::get('login')}}) Se déconnecter</a></li>
+                    <ul class=" nav navbar-nav navbar-right">
+                        <li><a href="/getLogin" data-toggle="collapse"
+                               data-target=".navbar-collapse.in">({{Session::get('login')}}) Se déconnecter</a></li>
                     </ul>
                 </div>
             @endif
