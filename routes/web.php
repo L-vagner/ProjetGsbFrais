@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MedicamentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,30 +23,6 @@ Route::post('/login', 'App\Http\Controllers\VisiteurController@signIn');
 
 Route::get('/getLogin', 'App\Http\Controllers\VisiteurController@signOut');
 
-Route::get('/getListeFrais', 'App\Http\Controllers\FraisController@getFraisVisiteur');
-
-Route::get('/modifierFrais/{id}', 'App\Http\Controllers\FraisController@updateFrais');
-
-Route::post('/validerFrais', 'App\Http\Controllers\FraisController@validateFrais');
-
-Route::get('/ajouterFrais', 'App\Http\Controllers\FraisController@addFrais');
-
-Route::get('/supprimerFrais/{id}','App\Http\Controllers\FraisController@removeFrais');
-
-Route::get('/supprimerFrais/full/{id}','App\Http\Controllers\FraisController@removeFraisFull');
-
-Route::get('/getListeFraisHF/{id}', 'App\Http\Controllers\FraisHFController@getFraisHF')->name('listeFraisHF');
-
-Route::get('/modifierFraisHF/{idHF}', 'App\Http\Controllers\FraisHFController@updateFraisHF')->name('modifierFraisHF');
-
-Route::post('/validerFraisHF', 'App\Http\Controllers\FraisHFController@validerFraisHF');
-
-Route::get('/ajouterFraisHF/{id}', 'App\Http\Controllers\FraisHFController@addFraisHF');
-
-Route::get('/supprimerFraisHF/{idHF}', 'App\Http\Controllers\FraisHFController@removeFraisHF');
-
-Route::get('/confirmerFraisHF/{id}', 'App\Http\Controllers\FraisHFController@confirmerFraisHF');
-
 Route::get('/findCompoMed', 'App\Http\Controllers\MedicamentController@rechercheMedicaments');
 
 Route::post('/getCompoMed', 'App\Http\Controllers\MedicamentController@afficheCompoMed');
@@ -53,3 +30,7 @@ Route::post('/getCompoMed', 'App\Http\Controllers\MedicamentController@afficheCo
 Route::get('/modifierCompoMed/{idMed}', 'App\Http\Controllers\MedicamentController@updateCompoMed')->name('modifierCompoMed');
 
 Route::post('/validerCompo', 'App\Http\Controllers\MedicamentController@validateCompoMed');
+
+Route::get('/ajouterCompoMed/{idMed}', 'App\Http\Controllers\MedicamentController@addCompoMed')->name('ajouterCompoMed');
+
+Route::get('/supprimerCompoMed/{idMed}/{idCompo}', [MedicamentController::class, 'removeCompoMed'])->name('supprimerCompoMed');

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Models\Composant;
 
 class Medicament extends Model
 {
@@ -22,8 +23,15 @@ class Medicament extends Model
 
     public function updateQteComposant($composants)
     {
-        foreach ($composants as $composant  => $qteComposant) {
-            $this->composants()->updateExistingPivot($composant, ['qte_composant' => $qteComposant]);
+        foreach ($composants as $id_compo=> $qte)
+        {
+            if ($qte <= 0) continue;
+            $this->composants()->syncWithoutDetaching([$id_compo => ['qte_composant' => $qte]]);
         }
+    }
+
+    public function removeComposant($id_compo)
+    {
+        $this->composants()->detach([$id_compo]);
     }
 }

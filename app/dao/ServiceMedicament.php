@@ -4,7 +4,6 @@ namespace App\dao;
 
 use App\Models\Composant;
 use App\Models\Medicament;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
 use App\Exceptions\MonException;
 
@@ -26,6 +25,17 @@ class ServiceMedicament
         try {
             $medicament = Medicament::where('id_medicament', $id)->first();
             return $medicament;
+        } catch (QueryException $e) {
+            throw new MonException($e->getMessage(), 5);
+        }
+    }
+
+    public function getMissingCompoMed($id)
+    {
+        try {
+            $medicament = Medicament::where('id_medicament', $id)->first();
+            $composants = Composant::all()->sortDesc()->wherenotin('id_composant', $medicament->composants->pluck('id_composant'));
+            return $composants;
         } catch (QueryException $e) {
             throw new MonException($e->getMessage(), 5);
         }

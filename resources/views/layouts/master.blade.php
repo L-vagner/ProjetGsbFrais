@@ -46,5 +46,6 @@
     @yield('content')
 </div>
 {!! Html::script('assets/js/bootstrap.js') !!}
+@yield('scripts')
 </body>
 </html>

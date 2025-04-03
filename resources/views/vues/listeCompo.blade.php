@@ -5,7 +5,13 @@
                     <span class="glyphicon glyphicon-pencil" data-toggle="tooltip" data-placement="top"
                           title="Modifier">
                     </span>
-        </a></small></h1>
+        </a></small>
+        <small class="text-body-secondary">Ajouter composants
+            <a href="{{route('ajouterCompoMed', $medicament->id_medicament)}}">
+                    <span class="glyphicon glyphicon-plus-sign" data-toggle="tooltip" data-placement="top"
+                          title="Ajouter composant">
+                    </span>
+            </a></small></h1>
     <table class="table table-bordered table-striped table-responsive">
         <thead>
         <th style="width:30%">Libellé</th>
@@ -19,7 +25,7 @@
                     {{$composant->pivot->qte_composant}}
                 </td>
                 <td style="text-align:center;">
-
+                    <a href="{{route('supprimerCompoMed', [$medicament->id_medicament, $composant->id_composant])}}">
                         <span class="glyphicon glyphicon-remove" data-toggle="tooltip" data-placement="top"
                               title="Supprimer"></span>
                     </a>
