@@ -29,16 +29,26 @@
                                 connecter</a></li>
                     </ul>
                 </div>
-            @else
-                <div class="collapse navbar-collapse" id="navbar-collapse-target">
+            @elseif (Session::get('type') == 'A')
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul class="nav navbar-nav">
                         <li>
                             <a href="/getMedicaments" data-toggle="collapse" data-target=".navbar-collapse.in">Medicaments</a>
                         </li>
                         <li>
+                            <a href="/formFamille" data-toggle="collapse" data-target=".navbar-collapse.in">Famille</a>
+                        </li>
+                        <li>
                             <a href="/findCompoMed" data-toggle="collapse" data-target=".navbar-collapse.in">Compositions</a>
                         </li>
                     </ul>
+                    <ul class=" nav navbar-nav navbar-right">
+                        <li><a href="/getLogin" data-toggle="collapse"
+                               data-target=".navbar-collapse.in">({{Session::get('login')}}) Se déconnecter</a></li>
+                    </ul>
+                </div>
+            @else
+                <div class="collapse navbar-collapse" id="navbar-collapse-target">
                     <ul class=" nav navbar-nav navbar-right">
                         <li><a href="/getLogin" data-toggle="collapse"
                                data-target=".navbar-collapse.in">({{Session::get('login')}}) Se déconnecter</a></li>

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\dao\ServiceFamille;
 use App\dao\ServiceMedicament;
 use App\Models\Medicament;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Exception;
+use function PHPUnit\Framework\isEmpty;
 
 class MedicamentController extends Controller
 {
@@ -16,13 +18,30 @@ class MedicamentController extends Controller
         Session::forget('erreur');
         try {
             $serviceMedicament = new ServiceMedicament();
-            $medicaments = $serviceMedicament->getMedicaments();
-            return view('vues/formFindCompo', compact('medicaments', 'erreur'));
+            $formOptions = $serviceMedicament->getMedicaments();
+            $title = "composants de médicament";
+            $search = "médicament";
+            return view('vues/formFind', compact('title', 'search', 'formOptions', 'erreur'));
         } catch (Exception $e) {
             $erreur = $e->getMessage();
             return view('vues/error', compact('erreur'));
         }
+    }
 
+    public function rechercheFamille()
+    {
+        $erreur = Session::get('erreur');
+        Session::forget('erreur');
+        try {
+            $serviceFamille = new ServiceFamille();
+            $formOptions = $serviceFamille->getFamilles();
+            $title = "médicament par famille";
+            $search = "famille";
+            return view('vues/formFind', compact('title', 'search', 'formOptions', 'erreur'));
+        } catch (Exception $e) {
+            $erreur = $e->getMessage();
+            return view('vues/error', compact('erreur'));
+        }
     }
 
     public function afficheCompoMed()
@@ -51,7 +70,7 @@ class MedicamentController extends Controller
             $titre_vue = "Modification de quantité de composants";
             $composants = $medicament->composants;
             $nom_medi = $medicament->nom_commercial;
-            return view('vues/formEditCompo', compact('id_med', 'titre_vue','composants', 'nom_medi', 'erreur'));
+            return view('vues/formEditCompo', compact('id_med', 'titre_vue', 'composants', 'nom_medi', 'erreur'));
         } catch (Exception $e) {
             $erreur = $e->getMessage();
             return view('vues/error', compact('erreur'));
@@ -125,4 +144,19 @@ class MedicamentController extends Controller
         }
     }
 
+    public function afficheMedParFam()
+    {
+        $id_fam = $_GET['id_fam'];
+        $erreur = Session::get('erreur');
+        Session::forget('erreur');
+        try {
+            $serviceMedicament = new ServiceMedicament();
+            $mesMedocs = $serviceMedicament->getMedicamentByFamille($id_fam);
+            $title = ": " . $mesMedocs->first()->famille->lib_famille;
+            return view('vues/listeMedoc', compact('mesMedocs', 'title', 'erreur'));
+        } catch (Exception $e) {
+            $erreur = $e->getMessage();
+            return view('vues/error', compact('erreur'));
+        }
+    }
 }

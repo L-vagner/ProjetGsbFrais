@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('content')
-    <h1>liste de medicaments</h1>
+    <h1>liste de medicaments {{$title ?? ""}}</h1>
     <table class="table table-bordered table-striped table-responsive">
         <thead>
         <th style="width:30%">Depot légal</th>

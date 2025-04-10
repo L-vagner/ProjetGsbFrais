@@ -40,5 +40,14 @@ class ServiceMedicament
             throw new MonException($e->getMessage(), 5);
         }
     }
+    public function getMedicamentByFamille($id)
+    {
+        try {
+            $medicaments = Medicament::all()->where('id_famille', $id);
+            return $medicaments;
+        } catch (QueryException $e) {
+            throw new MonException($e->getMessage(), 5);
+        }
+    }
 }
 

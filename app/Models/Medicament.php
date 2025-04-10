@@ -21,6 +21,15 @@ class Medicament extends Model
             ->withPivot('qte_composant');
     }
 
+    public function rapports(): BelongsToMany
+    {
+        return $this->belongsToMany(Rapport::class,
+            'offrir',
+            'id_medicament',
+            'id_rapport')
+            ->withPivot('qte_offerte');
+    }
+
     public function famille(): BelongsTo
     {
         return $this->belongsTo(Famille::class, 'id_famille');

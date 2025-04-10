@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RapportController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MedicamentController;
 
@@ -36,3 +37,9 @@ Route::get('/ajouterCompoMed/{idMed}', [MedicamentController::class, 'addCompoMe
 Route::get('/supprimerCompoMed/{idMed}/{idCompo}', [MedicamentController::class, 'removeCompoMed'])->name('supprimerCompoMed');
 
 Route::get('/getMedicaments', [MedicamentController::class, 'getMedicaments']);
+
+Route::get('/formFamille', [MedicamentController::class, 'rechercheFamille']);
+
+Route::get('/getFamille', [MedicamentController::class, 'afficheMedParFam'])->name('medocParFamille');
+
+Route::get('/findRapport', [RapportController::class, 'rechercheRapport']);

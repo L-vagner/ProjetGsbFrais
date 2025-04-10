@@ -53,7 +53,8 @@
             const search = document.querySelector("#searchbar");
 
             function hideSelects(searchtext) {
-                let re = new RegExp(".*" + searchtext + ".*", 'i');
+                let escapedText = RegExp.escape(searchtext)
+                let re = new RegExp(".*" + escapedText + ".*", 'i');
                 composantArray = Array.from(composantOptions);
                 composantArray.map((node) => {
                     let text = node.parentElement.previousElementSibling.innerText;
