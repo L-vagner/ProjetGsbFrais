@@ -42,6 +42,11 @@
                             <a href="/findCompoMed" data-toggle="collapse" data-target=".navbar-collapse.in">Compositions</a>
                         </li>
                     </ul>
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="/findRapport" data-toggle="collapse" data-targed=".navbar-collapse.in">Visites</a>
+                        </li>
+                    </ul>
                     <ul class=" nav navbar-nav navbar-right">
                         <li><a href="/getLogin" data-toggle="collapse"
                                data-target=".navbar-collapse.in">({{Session::get('login')}}) Se déconnecter</a></li>

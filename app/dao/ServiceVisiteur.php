@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
 use App\Exceptions\MonException;
+use App\Models\Visiteur;
 
 class ServiceVisiteur
 {
@@ -35,7 +36,7 @@ class ServiceVisiteur
     public static function getLogin()
     {
         $login = "";
-        if ((Session::has('id')) && (Session::get('id')> 0)) {
+        if ((Session::has('id')) && (Session::get('id') > 0)) {
             $id = Session::get('id');
             try {
                 $request = DB::table('visiteur')
@@ -55,5 +56,15 @@ class ServiceVisiteur
     public function logout()
     {
         Session::put('id', 0);
+    }
+
+    public function getVisiteurs()
+    {
+        try {
+            $mesVisiteurs = Visiteur::all();
+            return $mesVisiteurs;
+        } catch (QueryException $e) {
+            throw new MonException($e->getMessage(), 5);
+        }
     }
 }
