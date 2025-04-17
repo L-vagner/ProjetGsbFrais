@@ -21,11 +21,11 @@ class ServiceRapport
         }
     }
 
-    public function getRapport($id): Collection
+    public function getRapport($id): Rapport
     {
         try {
             $rapport = Rapport::where('id_rapport', $id)->get();
-            return $rapport;
+            return $rapport[0];
         } catch (QueryException $e) {
             throw new MonException($e->getMessage(), 5);
         }
@@ -53,8 +53,9 @@ class ServiceRapport
 
     public function updateRapport($id_rap, $id_prat, $id_visit, $date, $bilan, $motif): void
     {
+
         try {
-            $rapport = Rapport::find($id_rap);
+            $rapport = Rapport::firstWhere('id_rapport', $id_rap);
             $rapport->id_praticien = $id_prat;
             $rapport->id_visiteur = $id_visit;
             $rapport->date_rapport = $date;

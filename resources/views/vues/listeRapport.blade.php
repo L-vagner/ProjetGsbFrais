@@ -1,3 +1,36 @@
-<div>
-    <!-- He who is contented is rich. - Laozi -->
-</div>
+@extends('layouts.master')
+@section('content')
+
+    <h1>liste de rapports</h1>
+    <table class="table table-bordered table-striped table-responsive">
+        <thead>
+        <th style="width:20%">Praticien</th>
+        <th style="width:20%">Visiteur</th>
+        <th style="width:20%">Date rapport</th>
+        <th style="width:20%">Bilan</th>
+        <th style="width:20%">Motif</th>
+        <th>Modifier</th>
+        </thead>
+        @foreach($mesRapports as $rapport)
+            @php
+                $praticien = $rapport->praticien;
+                $visiteur = $rapport->visiteur;
+            @endphp
+            <tr>
+                <td>{{$praticien->nom_praticien}} {{$praticien->prenom_praticien}}</td>
+                <td>{{$visiteur->nom_visiteur}} {{$visiteur->prenom_visiteur}}</td>
+                <td>{{$rapport->date_rapport}}</td>
+                <td>{{$rapport->bilan}}</td>
+                <td>{{$rapport->motif}}</td>
+                <td style="text-align:center;">
+                    <a href="{{route('updateRapport', [$rapport->id_rapport])}}">
+                    <span class="glyphicon glyphicon-file" data-toggle="tooltip" data-placement="top"
+                          title="Modifier">
+                    </span>
+                    </a>
+                </td>
+            </tr>
+        @endforeach
+    </table>
+    @include('vues/error')
+@stop

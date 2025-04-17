@@ -44,7 +44,7 @@
                     </ul>
                     <ul class="nav navbar-nav">
                         <li>
-                            <a href="/findRapport" data-toggle="collapse" data-targed=".navbar-collapse.in">Visites</a>
+                            <a href="/getRapport" data-toggle="collapse" data-targed=".navbar-collapse.in">Visites</a>
                         </li>
                     </ul>
                     <ul class=" nav navbar-nav navbar-right">

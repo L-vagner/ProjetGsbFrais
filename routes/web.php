@@ -42,12 +42,12 @@ Route::get('/formFamille', [MedicamentController::class, 'rechercheFamille']);
 
 Route::get('/getFamille', [MedicamentController::class, 'afficheMedParFam'])->name('medocParFamille');
 
-Route::get('/findRapport', [RapportController::class, 'rechercheRapport']);
-
 Route::get('/getRapport', [RapportController::class, 'afficheRapport']);
+
+Route::get('/findRapport', [RapportController::class, 'rechercheRapport']);
 
 Route::get('/addRapport', [RapportController::class, 'addRapport']);
 
-Route::get('/updateRapport/{idRapp', [RapportController::class, 'updateRapport']);
+Route::get('/updateRapport/{idRapp}', [RapportController::class, 'updateRapport'])->name('updateRapport');
 
 Route::post('/validerRapport', [RapportController::class, 'validateRapport']);

@@ -11,6 +11,20 @@ use Illuminate\Http\Request;
 
 class RapportController extends Controller
 {
+    public function afficheRapport()
+    {
+        $erreur = Session::get('erreur');
+        Session::forget('erreur');
+        try {
+            $serviceRapport = new ServiceRapport();
+            $mesRapports = $serviceRapport->getRapports();
+            return view('vues/listeRapport', compact('mesRapports', 'erreur'));
+        } catch (Exception $e) {
+            $erreur = $e->getMessage();
+            return view('vues/error', compact('erreur'));
+        }
+    }
+
     public function rechercheRapport()
     {
         $erreur = Session::get('erreur');
@@ -52,6 +66,26 @@ class RapportController extends Controller
         }
     }
 
+    public function updateRapport(int $id_rapport)
+    {
+        $erreur = Session::get('erreur');
+        Session::forget('erreur');
+        try {
+            $serviceRapport = new ServiceRapport();
+            $serviceVisiteur = new ServiceVisiteur();
+
+            $monRapport = $serviceRapport->getRapport($id_rapport);
+            $mesPraticiens = $serviceRapport->getPraticiens();
+            $mesVisiteurs = $serviceVisiteur->getVisiteurs();
+            return view('vues/formEditRapport', compact('erreur',
+                'id_rapport', 'monRapport', 'mesPraticiens', 'mesVisiteurs'));
+
+        } catch (Exception $e) {
+            $erreur = $e->getMessage();
+            return view('vues/error', compact('erreur'));
+        }
+    }
+
     public function validateRapport(Request $request)
     {
         $erreur = Session::get('erreur');
@@ -65,11 +99,13 @@ class RapportController extends Controller
             $motif = $request->input('motif');
 
             $serviceRapport = new ServiceRapport();
-            if ($id_rapport === 0) {
+            if ($id_rapport < 0) {
                 $serviceRapport->insertRapport($id_praticien, $id_visiteur, $date, $bilan, $motif);
             } else {
                 $serviceRapport->updateRapport($id_rapport, $id_praticien, $id_visiteur, $date, $bilan, $motif);
             }
+
+            return redirect('/getRapport');
 
         } catch (Exception $e) {
             $erreur = $e->getMessage();

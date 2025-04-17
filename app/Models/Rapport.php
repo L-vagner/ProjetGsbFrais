@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Rapport extends Model
@@ -16,6 +17,11 @@ class Rapport extends Model
     public function praticien(): BelongsTo
     {
         return $this->belongsTo(Praticien::class, 'id_praticien', 'id_praticien');
+    }
+
+    public function visiteur(): BelongsTo
+    {
+        return $this->belongsTo(Visiteur::class, 'id_visiteur', 'id_visiteur');
     }
 
     public function medicaments(): BelongsToMany
