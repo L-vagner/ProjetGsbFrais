@@ -24,7 +24,15 @@ class ServiceRapport
     public function getRapport($id): Rapport
     {
         try {
-            $rapport = Rapport::where('id_rapport', $id)->get();
+            $rapport = Rapport::where('id_rapport', $id)->with(
+                [
+                    'praticien' => function ($q) use ($id) {
+                        $q->select('id_praticien', 'nom_praticien', 'prenom_praticien');
+                    },
+                    'visiteur' => function ($q) use ($id) {
+                        $q->select('id_visiteur', 'nom_visiteur', 'prenom_visiteur');
+                    }
+                ])->get();
             return $rapport[0];
         } catch (QueryException $e) {
             throw new MonException($e->getMessage(), 5);

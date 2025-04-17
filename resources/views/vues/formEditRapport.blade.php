@@ -93,7 +93,7 @@
                     </button>
                     &nbsp;
                     <button type="button" class="btn btn-default btn-primary"
-                            onclick="javascript: window.location = '/getRapport';">
+                            onclick="window.location = '/getRapport';">
                         <span class="glyphicon glyphicon-remove"></span> Annuler
                     </button>
                 </div>
