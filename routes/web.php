@@ -53,3 +53,9 @@ Route::get('/updateRapport/{idRapp}', [RapportController::class, 'updateRapport'
 Route::post('/validerRapport', [RapportController::class, 'validateRapport']);
 
 Route::get('/viewMedicamentOffert/{idRapp}', [RapportController::class, 'afficheMedocOffert']);
+
+Route::get('/addMedocOffert/{idRap}', [RapportController::class, 'addMedocOffert'])->name('addMedocOffert');
+
+Route::post('/validerMedocOffert', [RapportController::class, 'validateMedocOffert']);
+
+Route::get('/supprimerMedocOffert/{idRap}/{idMed}', [RapportController::class, 'removeMedocOffert']);

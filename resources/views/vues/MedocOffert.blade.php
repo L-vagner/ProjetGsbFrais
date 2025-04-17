@@ -18,9 +18,13 @@
         @foreach($mesMedocs as $medoc)
             <h4>
                 {{$medoc->nom_commercial}}
+
                 <small>
                     Quantité offerte: {{$medoc->qte_offerte}}
                 </small>
+                <a href="/supprimerMedocOffert/{{$monRapport->id_rapport}}/{{$medoc->id_medicament}}">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </a>
             </h4>
         @endforeach
     </div>
