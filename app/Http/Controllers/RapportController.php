@@ -119,13 +119,9 @@ class RapportController extends Controller
         $erreur = Session::get('erreur');
         Session::forget('erreur');
         try {
-            $serviceMedicament = new ServiceMedicament();
             $serviceRapport = new ServiceRapport();
-            $mesMedocs = $serviceMedicament->getMedicamentByVisite($id_rapport);
             $monRapport = $serviceRapport->getRapport($id_rapport);
-            foreach ($mesMedocs as $medoc) {
-                $medoc->qte_offerte = $medoc->rapports[0]->pivot->qte_offerte;
-            }
+            $mesMedocs = $this->getMedicamentsOffert($id_rapport);
             return view('vues/MedocOffert', compact('erreur',
                 'mesMedocs', 'id_rapport', 'monRapport'));
         } catch (Exception $e) {
@@ -133,4 +129,37 @@ class RapportController extends Controller
             return view('vues/error', compact('erreur'));
         }
     }
+
+    public function addMedocOffert(int $id_rapport)
+    {
+        try {
+            $mesMedocs = $this->getMedicamentsOffert($id_rapport);
+
+            return view('vues/', compact('mesMedocs', 'id_rapport'));
+        } catch (Exception $e) {
+            $erreur = $e->getMessage();
+            return view('vues/error', compact('erreur'));
+        }
+    }
+
+    public function validateMedocOffert(Request $request)
+    {
+
+    }
+
+    public function removeMedocOffert(int $id_rapport, int $id_medoc): void
+    {
+
+    }
+
+    private function getMedicamentsOffert(int $id_rapport)
+    {
+        $serviceMedicament = new ServiceMedicament();
+        $mesMedocs = $serviceMedicament->getMedicamentByVisite($id_rapport);
+        foreach ($mesMedocs as $medoc) {
+            $medoc->qte_offerte = $medoc->rapports[0]->pivot->qte_offerte;
+        }
+        return $mesMedocs;
+    }
+
 }

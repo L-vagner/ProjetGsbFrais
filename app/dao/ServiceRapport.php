@@ -91,20 +91,4 @@ class ServiceRapport
         }
     }
 
-    public function addMedocOffert(int $id_rapport)
-    {
-
-
-    }
-
-    public function validateMedocOffert(Request $request)
-    {
-
-    }
-
-    public function removeMedocOffert(int $id_rapport, int $id_medoc): void
-    {
-
-    }
-
 }
