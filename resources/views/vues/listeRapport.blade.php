@@ -10,13 +10,15 @@
 
     <table class="table table-bordered table-striped table-responsive">
         <thead>
-        <th style="width:20%">Praticien</th>
-        <th style="width:20%">Visiteur</th>
-        <th style="width:20%">Date rapport</th>
-        <th style="width:20%">Bilan</th>
-        <th style="width:20%">Motif</th>
-        <th>Médicaments offerts</th>
-        <th>Modifier</th>
+        <tr>
+            <th style="width:20%">Praticien</th>
+            <th style="width:20%">Visiteur</th>
+            <th style="width:20%">Date rapport</th>
+            <th style="width:20%">Bilan</th>
+            <th style="width:20%">Motif</th>
+            <th>Médicaments offerts</th>
+            <th>Modifier</th>
+        </tr>
         </thead>
         @foreach($mesRapports as $rapport)
             @php
@@ -30,7 +32,7 @@
                 <td>{{$rapport->bilan}}</td>
                 <td>{{$rapport->motif}}</td>
                 <td style="text-align: center">
-                    <a href="{{route("")}}">
+                    <a href="/viewMedicamentOffert/{{$rapport->id_rapport}}">
                         <span class="glyphicon glyphicon-file" data-toggle="tooltip" data-placement="top"
                               title="consulter médicaments offerts">
                         </span>

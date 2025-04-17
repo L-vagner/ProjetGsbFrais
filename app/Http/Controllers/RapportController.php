@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\dao\ServiceMedicament;
 use App\dao\ServiceRapport;
 use App\dao\ServiceVisiteur;
 use Exception;
@@ -111,7 +112,25 @@ class RapportController extends Controller
             $erreur = $e->getMessage();
             return view('vues/error', compact('erreur'));
         }
+    }
 
-
+    public function afficheMedocOffert(int $id_rapport)
+    {
+        $erreur = Session::get('erreur');
+        Session::forget('erreur');
+        try {
+            $serviceMedicament = new ServiceMedicament();
+            $serviceRapport = new ServiceRapport();
+            $mesMedocs = $serviceMedicament->getMedicamentByVisite($id_rapport);
+            $monRapport = $serviceRapport->getRapport($id_rapport);
+            foreach ($mesMedocs as $medoc) {
+                $medoc->qte_offerte = $medoc->rapports[0]->pivot->qte_offerte;
+            }
+            return view('vues/MedocOffert', compact('erreur',
+                'mesMedocs', 'id_rapport', 'monRapport'));
+        } catch (Exception $e) {
+            $erreur = $e->getMessage();
+            return view('vues/error', compact('erreur'));
+        }
     }
 }

@@ -40,10 +40,27 @@ class ServiceMedicament
             throw new MonException($e->getMessage(), 5);
         }
     }
+
     public function getMedicamentByFamille($id)
     {
         try {
             $medicaments = Medicament::all()->where('id_famille', $id);
+            return $medicaments;
+        } catch (QueryException $e) {
+            throw new MonException($e->getMessage(), 5);
+        }
+    }
+
+    public function getMedicamentByVisite($id_rapport)
+    {
+        try {
+            $query = Medicament::whereHas('rapports', function ($q) use ($id_rapport) {
+                $q->where('rapport_visite.id_rapport', $id_rapport);
+            })->with(['rapports' => function ($q) use ($id_rapport) {
+                $q->where('rapport_visite.id_rapport', $id_rapport)
+                    ->select('rapport_visite.id_rapport');
+            }]);
+            $medicaments = $query->get();
             return $medicaments;
         } catch (QueryException $e) {
             throw new MonException($e->getMessage(), 5);
