@@ -6,6 +6,9 @@
         <small class="text-body-secondary">ajouter un rapport
             <a href="{!! route("ajouterRapport") !!}"><span class="glyphicon glyphicon-plus-sign"></span></a>
         </small>
+        <small class="text-body-secondary">rechercher un rapport
+            <a href="{!! route("findRapport") !!}"><span class="glyphicon glyphicon-search"></span></a>
+        </small>
     </h1>
 
     <table class="table table-bordered table-striped table-responsive">

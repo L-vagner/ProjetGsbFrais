@@ -44,7 +44,7 @@ Route::get('/getFamille', [MedicamentController::class, 'afficheMedParFam'])->na
 
 Route::get('/getRapport', [RapportController::class, 'afficheRapport']);
 
-Route::get('/findRapport', [RapportController::class, 'rechercheRapport']);
+Route::get('/findRapport', [RapportController::class, 'rechercheRapport'])->name('findRapport');
 
 Route::get('/addRapport', [RapportController::class, 'addRapport'])->name("ajouterRapport");
 

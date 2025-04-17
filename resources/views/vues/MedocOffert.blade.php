@@ -13,7 +13,12 @@
     @endphp
     <h2>
         {{$nom_praticien}} {{$prenom_praticien}} : {{$nom_visiteur}} {{$prenom_visiteur}}
-        : {{$monRapport->date_rapport}}</h2>
+        : {{$monRapport->date_rapport}}
+        <small class="text-body-secondary">Gérer les médicaments offerts
+            <a href="{!! route("addMedocOffert", ['idRap' =>$monRapport->id_rapport]) !!}"><span
+                    class="glyphicon glyphicon-list"></span></a>
+        </small>
+    </h2>
     <div class="col-md-20  col-sm-16 well">
         @foreach($mesMedocs as $medoc)
             <h4>
