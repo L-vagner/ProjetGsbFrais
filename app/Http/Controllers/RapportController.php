@@ -16,6 +16,10 @@ class RapportController extends Controller
     {
         $erreur = Session::get('erreur');
         Session::forget('erreur');
+
+        if (isset($_GET['id_rap'])) {
+            return redirect('/updateRapport/' . $_GET['id_rap']);
+        }
         try {
             $serviceRapport = new ServiceRapport();
             $mesRapports = $serviceRapport->getRapports();
@@ -59,8 +63,12 @@ class RapportController extends Controller
 
             $mesPraticiens = $serviceRapport->getPraticiens();
             $mesVisiteurs = $serviceVisiteur->getVisiteurs();
-            return view('vues/formEditRapport', compact('erreur',
-                'id_praticien', 'mesPraticiens', 'mesVisiteurs'));
+            return view('vues/formEditRapport', compact(
+                'erreur',
+                'id_praticien',
+                'mesPraticiens',
+                'mesVisiteurs'
+            ));
         } catch (Exception $e) {
             $erreur = $e->getMessage();
             return view('vues/error', compact('erreur'));
@@ -78,8 +86,13 @@ class RapportController extends Controller
             $monRapport = $serviceRapport->getRapport($id_rapport);
             $mesPraticiens = $serviceRapport->getPraticiens();
             $mesVisiteurs = $serviceVisiteur->getVisiteurs();
-            return view('vues/formEditRapport', compact('erreur',
-                'id_rapport', 'monRapport', 'mesPraticiens', 'mesVisiteurs'));
+            return view('vues/formEditRapport', compact(
+                'erreur',
+                'id_rapport',
+                'monRapport',
+                'mesPraticiens',
+                'mesVisiteurs'
+            ));
 
         } catch (Exception $e) {
             $erreur = $e->getMessage();
@@ -122,8 +135,12 @@ class RapportController extends Controller
             $serviceRapport = new ServiceRapport();
             $monRapport = $serviceRapport->getRapport($id_rapport);
             $mesMedocs = $this->getMedicamentsOffert($id_rapport);
-            return view('vues/MedocOffert', compact('erreur',
-                'mesMedocs', 'id_rapport', 'monRapport'));
+            return view('vues/MedocOffert', compact(
+                'erreur',
+                'mesMedocs',
+                'id_rapport',
+                'monRapport'
+            ));
         } catch (Exception $e) {
             $erreur = $e->getMessage();
             return view('vues/error', compact('erreur'));

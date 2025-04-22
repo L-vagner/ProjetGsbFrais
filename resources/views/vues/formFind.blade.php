@@ -1,18 +1,18 @@
 @extends('layouts.master')
 @section('content')
     @if ($search == "médicament")
-        {!! Form::open(['url'=>'/getCompoMed', 'method'=>'get']) !!}
+        {!! Form::open(['url' => '/getCompoMed', 'method' => 'get']) !!}
     @elseif ($search == "famille")
-        {!! Form::open(['url'=>'/getFamille', 'method' => 'get']) !!}
+        {!! Form::open(['url' => '/getFamille', 'method' => 'get']) !!}
     @elseif ($search == "rapport")
-        {!! Form::open(['url' =>'/getRapport', 'method' => 'get']) !!}
+        {!! Form::open(['url' => '/getRapport', 'method' => 'get']) !!}
     @endif
 
     <div class="col-md-12 well well-md">
         <h1>Recherche {{$title}}</h1>
         <div class="form-horizontal">
             <div class="form-group">
-                @if ($search =="rapport")
+                @if ($search == "rapport")
                     <label class="col-md-3 control-label" for="searchbar">Recherche praticien</label>
                     <div class="col-md-6 col-md-3">
                         <input type="text" id="searchbar" class="form-control" placeholder="Nom praticien ou date">
@@ -34,37 +34,37 @@
                                 <option value="{{$option->id_medicament}}">{{$option->nom_commercial}}</option>
                             @endforeach
                         </select>
-                    @elseif ($search=="famille")
+                    @elseif ($search == "famille")
                         <select class="form-select" name="id_fam" id="select" size="5" required>
                             <option value="" id="disabled" style="display: none" disabled selected></option>
                             @foreach($formOptions as $option)
                                 <option value="{{$option->id_famille}}">{{$option->lib_famille}}</option>
                             @endforeach
                         </select>
-                    @elseif ($search=="rapport")
-                        <select class="form-select" name="id_rap" id="select" size="3" required>
-                            <option value="" id="disabled" style="display: none" disabled selected></option>
-                            @foreach($formOptions as $option)
-                                {{
-                                    $id_prat = $option->praticien->id_praticien,
-                                    $name =  $option->praticien->nom_praticien,
-                                    $date = $option->date_rapport
-                                }}
+                    @elseif ($search == "rapport")
+                                <select class="form-select" name="id_rap" id="select" size="3" required>
+                                    <option value="" id="disabled" style="display: none" disabled selected></option>
+                                    @foreach($formOptions as $option)
 
-                                <option value="{{$option->id_rapport}}"
-                                        data-praticien="{{$name}}" data-date="{{$date}}"
-                                        data-id-praticien="{{$id_prat}}">{{$name}} {{$date}}</option>
-                            @endforeach
-                        </select>
+                                                    @php
+                                                        $id_prat = $option->praticien->id_praticien;
+                                                        $name = $option->praticien->nom_praticien;
+                                                        $date = $option->date_rapport;
+                                                    @endphp
+
+                                                    <option value="{{$option->id_rapport}}" data-praticien="{{$name}}" data-date="{{$date}}"
+                                                        data-id-praticien="{{$id_prat}}">{{$name}} {{$date}}</option>
+                                    @endforeach
+                                </select>
                     @endif
                 </div>
                 @if ($search == "rapport")
                     <div class="col">
                         <small class="text-body-secondary input-hidden" id="addRapport">
                             <a>
-                    <span class="glyphicon glyphicon-plus-sign" data-toggle="tooltip" data-placement="top"
-                          title="Ajouter Rapport">
-                    </span>
+                                <span class="glyphicon glyphicon-plus-sign" data-toggle="tooltip" data-placement="top"
+                                    title="Ajouter Rapport">
+                                </span>
                             </a>
                             <span></span>
                         </small>
@@ -74,7 +74,12 @@
             <div class="form-group">
                 <div class="col-md-6 col-md-offset-3 col-md-3">
                     <button type="submit" class="btn btn-default btn-primary"><span
-                            class="glyphicon glyphicon-log-in"></span> Valider
+                            class="glyphicon glyphicon-log-in"></span> 
+                            @if($search == "rapport")
+                            Modifier
+                            @else
+                            Valider
+                            @endif
                     </button>
                 </div>
             </div>
@@ -131,8 +136,7 @@
             select.setAttribute('size', Math.min(min, i).toString());
             if (i === 1) {
                 select.value = val;
-                if (witch === "rapport")
-                {
+                if (witch === "rapport") {
                     setLink(val)
                 }
 
@@ -144,8 +148,7 @@
 
         function resetSelect() {
             select.value = "";
-            if (witch === "rapport")
-            {
+            if (witch === "rapport") {
                 span.classList.add("input-hidden")
                 span.children[0].removeAttribute("href");
                 span.children[1].innerText = "";
