@@ -17,8 +17,8 @@
             <div class="form-group">
                 <label class="col-md-4 col-sm-3 control-label">Praticien : </label>
                 <div class="col-md-6 col-md-3">
-                    <select class="form-select" name="id_praticien" size="6" required>
-                        <option value="" disabled>
+                    <select class="form-select" name="id_praticien" id="select-praticien" size="6" required>
+                        <option disabled>
                             Selectionner un praticien
                         </option>
                         @foreach($mesPraticiens as $praticien)
@@ -29,13 +29,20 @@
                         @endforeach
                     </select>
                 </div>
+
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <input type="text" name="" id="search-praticien" class="form-control" placeholder="Recherche de praticien"/>
+                    </div>
+                </div>
+
             </div>
 
             <div class="form-group">
                 <label class="col-md-4 col-sm-3 control-label">Visiteur : </label>
                 <div class="col-md-6 col-md-3">
-                    <select class="form-select" name="id_visiteur" size="6" required>
-                        <option value="" disabled>Selectionner un visiteur
+                    <select class="form-select" name="id_visiteur" id="select-visiteur" size="6" required>
+                        <option disabled>Selectionner un visiteur
                         </option>
                         @foreach($mesVisiteurs as $visiteur)
                             @if(isset($id_visiteur))
@@ -43,12 +50,19 @@
                                     {{$id_visiteur === $visiteur->id_visiteur ? "selected" : ""}}>
                             @else
                                 <option value="{{$visiteur->id_visiteur}}">
-                                    @endif
+                            @endif
                                     {{$visiteur->nom_visiteur}} {{$visiteur->prenom_visiteur}}
                                 </option>
                                 @endforeach
                     </select>
                 </div>
+
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <input type="text" name="" id="search-visiteur" class="form-control" placeholder="Recherche de visiteur"/>
+                    </div>
+                </div>
+                
             </div>
 
             <div class="form-group">
@@ -87,7 +101,7 @@
             </div>
 
             <div class="form-group">
-                <div class="col-md-6 col-md-offset-4 col-sm-6 col-sm-offset-4">
+                <div class="col-md-6 col-md-offset-4 col-md-3">
                     <button type="submit" class="btn btn-default btn-primary">
                         <span class="glyphicon glyphicon-ok"></span> Valider
                     </button>
@@ -97,10 +111,75 @@
                         <span class="glyphicon glyphicon-remove"></span> Annuler
                     </button>
                 </div>
+
+                @if(isset($monRapport))
+
+                <div class="form-group">
+                    <a href="/viewMedicamentOffert/{{ $id_rapport }}">
+                        <span class="glyphicon glyphicon-file" data-toggle="tooltip" data-placement="top"
+                        title="Ajouter Rapport">
+                        </span>
+                    </a>
+                    <span>Médicaments offerts</span>
+                </div>
+                @endif
             </div>
+
+            
             <div class="col-md-6 col-md-offset-3  col-sm-6 col-sm-offset-3" id="erreur">
                 @include('vues/error')
             </div>
         </div>
     </div>
-@stop
+@endsection
+
+@section('scripts')
+
+<script text="text/javascript">
+    const selectPraticien = document.querySelector("#select-praticien");
+    const searchPraticien = document.querySelector("#search-praticien");
+    const selectVisiteur = document.querySelector("#select-visiteur");
+    const searchVisiteur = document.querySelector("#search-visiteur");
+    const min = 6;
+
+    function hideSelects(searchtext, select) {
+                let escapedText = RegExp.escape(searchtext);
+                let re = new RegExp(".*" + escapedText + ".*", 'i');
+                let selectOptions = Array.from(select.children);
+                let i = 0;
+                let val = null;
+
+                selectOptions.map((e) =>{
+                    if (re.test(e.innerText))
+                    {
+                        e.classList.remove('input-hidden');
+                        val = e.getAttribute("value");
+                        i++
+                    }
+                    else
+                    {
+                        e.classList.add('input-hidden');
+                    }
+                    })
+                select.setAttribute('size', Math.min(min, i).toString());
+                if (i === 1)
+                {
+                    select.value = val;
+                }
+                else 
+                {
+                    resetSelect(select);
+                }
+                
+    }
+
+    function resetSelect(select) {
+        select.value = "";
+    }
+
+    searchPraticien.addEventListener('input', (event) => hideSelects(event.target.value, selectPraticien));
+    searchVisiteur.addEventListener('input', (event) => hideSelects(event.target.value, selectVisiteur));
+
+</script>
+
+@endsection

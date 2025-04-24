@@ -98,7 +98,6 @@
         const span = document.querySelector("#addRapport");
 
         let witch = "{{$search}}";
-        let dateSearch = false;
         let min = 10;
         switch (witch) {
             case "médicament":
