@@ -118,7 +118,7 @@
                 <div class="form-group">
                     <a href="/viewMedicamentOffert/{{ $id_rapport }}">
                         <span class="glyphicon glyphicon-file" data-toggle="tooltip" data-placement="top"
-                        title="Ajouter Rapport">
+                        title="Modifier médicaments offerts">
                         </span>
                     </a>
                     <span>Médicaments offerts</span>
