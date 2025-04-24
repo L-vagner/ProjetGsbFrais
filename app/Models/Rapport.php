@@ -26,11 +26,28 @@ class Rapport extends Model
 
     public function medicaments(): BelongsToMany
     {
-        return $this->belongsToMany(Rapport::class,
+        return $this->belongsToMany(
+            Rapport::class,
             'offrir',
             'id_rapport',
-            'id_medicament')
+            'id_medicament'
+        )
             ->withPivot('qte_offerte');
+    }
+
+    public function updateQteOfferte($medicaments)
+    {
+        foreach ($medicaments as $id_medoc => $qte) {
+            if ($qte <= 0)
+                continue;
+
+            $this->medicaments()->syncWithoutDetaching([$id_medoc => ['qte_offerte' => $qte]]);
+        }
+    }
+
+    public function removeMedocOfferte($id_medoc)
+    {
+        $this->composants()->detach([$id_medoc]);
     }
 
 }
