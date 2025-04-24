@@ -17,7 +17,7 @@
                 <div class="col-md-2 col-sm-2">
                     <input type="number" name="qte_compo[{{$composant->id_composant}}]" 
                     {!! $qte_composant = isset($composant->pivot->qte_composant) ? $composant->pivot->qte_composant : 0 !!}
-                    value="{{ $qte_composant}}" class="form-control" autofocus>
+                    value="{{ $qte_composant}}" class="form-control" step="0.01" autofocus>
                 </div>
             </div>
         @endforeach
@@ -94,6 +94,7 @@
         input.setAttribute('type', 'number');
         input.setAttribute('name', 'qte_compo[' + option.value + ']');
         input.setAttribute('value', '0');
+        input.setAttribute('step', '0.01');
         
         div.appendChild(input);
         option.remove();

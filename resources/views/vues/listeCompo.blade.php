@@ -20,7 +20,7 @@
             </td>
             <td style="text-align:center;">
                 <a href="{{route('supprimerCompoMed', [$medicament->id_medicament, $composant->id_composant])}}">
-                    <span class="glyphicon glyphicon-remove" data-toggle="tooltip" data-placement="top"
+                    <span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="top"
                         title="Supprimer"></span>
                 </a>
             </td>
