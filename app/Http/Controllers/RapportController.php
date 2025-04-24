@@ -151,7 +151,7 @@ class RapportController extends Controller
         }
     }
 
-    public function modifierMedocOffert(int $id_rapport)
+    public function updateMedocOffert(int $id_rapport)
     {
         $erreur = Session::get('erreur');
         Session::forget('erreur');

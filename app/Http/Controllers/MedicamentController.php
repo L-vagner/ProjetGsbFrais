@@ -67,10 +67,22 @@ class MedicamentController extends Controller
         try {
             $serviceMedicament = new ServiceMedicament();
             $medicament = $serviceMedicament->getMedicamentById($id_med);
-            $titre_vue = "Modification de quantité de composants";
-            $composants = $medicament->composants;
+            $titre_vue = "Modification des composants";
+            $mesComposants = $medicament->composants;
             $nom_medi = $medicament->nom_commercial;
-            return view('vues/formEditCompo', compact('id_med', 'titre_vue', 'composants', 'nom_medi', 'erreur'));
+            $missingComposants = $serviceMedicament->getMissingCompoMed($id_med);
+
+            return view(
+                'vues/formEditCompo',
+                compact(
+                    'id_med',
+                    'nom_medi',
+                    'titre_vue',
+                    'mesComposants',
+                    'missingComposants',
+                    'erreur'
+                )
+            );
         } catch (Exception $e) {
             $erreur = $e->getMessage();
             return view('vues/error', compact('erreur'));
@@ -91,23 +103,6 @@ class MedicamentController extends Controller
 
             $composants = $medicament->composants;
             return view('vues/listeCompo', compact('medicament', 'composants', 'erreur'));
-        } catch (Exception $e) {
-            $erreur = $e->getMessage();
-            return view('vues/error', compact('erreur'));
-        }
-    }
-
-    public function addCompoMed($id_med)
-    {
-        $erreur = Session::get('erreur');
-        Session::forget('erreur');
-        try {
-            $serviceMedicament = new ServiceMedicament();
-            $medicament = $serviceMedicament->getMedicamentById($id_med);
-            $composants = $serviceMedicament->getMissingCompoMed($id_med);
-            $titre_vue = "Ajout de composants";
-            $nom_medi = $medicament->nom_commercial;
-            return view('vues/formEditCompo', compact('id_med', 'titre_vue', 'nom_medi', 'composants', 'erreur'));
         } catch (Exception $e) {
             $erreur = $e->getMessage();
             return view('vues/error', compact('erreur'));

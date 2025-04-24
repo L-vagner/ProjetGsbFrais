@@ -1,72 +1,148 @@
 @extends('layouts.master')
 @section('content')
-    {!! Form::open(['url' => '/validerCompo']) !!}
+{!! Form::open(['url' => '/validerCompo']) !!}
 
-    <div class="col-md-20  col-sm-16 well well-md">
-        <h1>{{$titre_vue}}</h1>
-        <h4>{{$nom_medi}}</h4>
-        <div class="form-horizontal">
-            <input type="hidden" name="id_med" value="{{$id_med}}"/>
-            @if($titre_vue === "Ajout de composants")
-                <div class="form-group">
-                    <label class="col-md-3 control-label" for="searchbar">Recherche composants</label>
-                    <div class="col-md-6 col-md-3">
-                        <input type="text" id="searchbar" class="form-control" placeholder="Nom composants">
-                    </div>
-                </div>
-            @endif
+<div class="col-md-20  col-sm-16 well well-md">
+    <h1>{{$titre_vue}}</h1>
+    <h4>{{$nom_medi}}</h4>
+    <div class="form-horizontal">
+        <input type="hidden" name="id_med" value="{{$id_med}}" />
+        <div class="col-md-offset-2 form-text">
+            Les valeurs 0 sont ignorées, si vous désirez supprimer un composant, faite le depuis la page précédente.
+        </div>
 
-            @foreach($composants as $composant)
-                <div class="form-group">
-                    <label class="col-md-4 col-sm-3 control-label">Quantité de {{$composant->lib_composant}} : </label>
-                    <div class="col-md-2 col-sm-2">
-                        <input type="number" name="qte_compo[{{$composant->id_composant}}]"
-                               {!! $qte_composant = isset($composant->pivot->qte_composant) ? $composant->pivot->qte_composant: 0 !!}
-                               value="{{ $qte_composant}}" class="form-control"
-                               autofocus>
-                    </div>
-                </div>
-            @endforeach
+        @foreach($mesComposants as $composant)
             <div class="form-group">
-                <div class="col-md-6 col-md-offset-4 col-sm-6 col-sm-offset-4">
-                    <button type="submit" class="btn btn-default btn-primary">
-                        <span class="glyphicon glyphicon-ok"></span> Valider
-                    </button>
-                    &nbsp;
-                    <button type="button" class="btn btn-default btn-primary"
-                            onclick="javascript: window.location = '/getCompoMed?id_med={{$id_med}}';">
-                        <span class="glyphicon glyphicon-remove"></span> Annuler
-                    </button>
+                <label class="col-md-4 col-sm-3 control-label">Quantité de {{$composant->lib_composant}} : </label>
+                <div class="col-md-2 col-sm-2">
+                    <input type="number" name="qte_compo[{{$composant->id_composant}}]" 
+                    {!! $qte_composant = isset($composant->pivot->qte_composant) ? $composant->pivot->qte_composant : 0 !!}
+                    value="{{ $qte_composant}}" class="form-control" autofocus>
                 </div>
             </div>
-            <div class="col-md-6 col-md-offset-3  col-sm-6 col-sm-offset-3" id="erreur">
-                @include('vues/error')
+        @endforeach
+
+                <div class="form-group" id="Add-button">
+
+                    <label class="control-label col-md-4">Ajouter un médicament</label>
+                    <div class="col-md-3">
+                        <select class="form-select" size=4>
+                            @foreach ($missingComposants as $composant)
+                                <option value="{{ $composant->id_composant }}">
+                                    {{ $composant->lib_composant }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" type="button" onclick="addSelection()">Ajouter</button>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-4">Rechercher un composant à ajouter</label>
+                    <div class="col-md-3">
+                        <input type="text" name="" id="search-medoc" class="form-control"
+                            placeholder="Recherche de composant" />
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-6 col-md-offset-4 col-sm-6 col-sm-offset-4">
+                        <button type="submit" class="btn btn-default btn-primary">
+                            <span class="glyphicon glyphicon-ok"></span> Valider
+                        </button>
+                        &nbsp;
+                        <button type="button" class="btn btn-default btn-primary"
+                            onclick="javascript: window.location = '/getCompoMed?id_med={{$id_med}}';">
+                            <span class="glyphicon glyphicon-remove"></span> Annuler
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6 col-md-offset-3  col-sm-6 col-sm-offset-3" id="erreur">
+                    @include('vues/error')
+                </div>
             </div>
         </div>
-    </div>
-@stop
+        @stop
 
-@if($titre_vue === "Ajout de composants")
-    @section('scripts')
-        <script type="text/javascript">
-            const composantOptions = document.querySelectorAll('input[type="number"][name^="qte_compo"]');
-            const search = document.querySelector("#searchbar");
+@section('scripts')
+<script type="text/javascript">
+    const select = document.querySelector('select');
+    const form = document.querySelector("div.form-horizontal");
+    const button = form.children.namedItem('Add-button');
+    const search = document.querySelector('#search-medoc');
 
-            function hideSelects(searchtext) {
-                let escapedText = RegExp.escape(searchtext)
-                let re = new RegExp(".*" + escapedText + ".*", 'i');
-                composantArray = Array.from(composantOptions);
-                composantArray.map((node) => {
-                    let text = node.parentElement.previousElementSibling.innerText;
-                    if (re.test(text)) {
-                        node.parentElement.parentElement.classList.remove('input-hidden');
-                    } else {
-                        node.parentElement.parentElement.classList.add('input-hidden');
-                    }
-                })
+    function addSelection() {
+        if (select.value == false)
+            return;
+
+        let option = select.selectedOptions[0];
+        option.innerText = option.innerText.toString().replace('\n', '').trim();
+
+        let node = document.createElement('div');
+        node.classList.add('form-group');
+
+        let label = document.createElement('label');
+        label.classList.add('col-md-4', 'col-sm-3', 'control-label')
+        label.innerText = "Quantité de " + option.innerText + " : ";
+
+        let div = document.createElement('div');
+        div.classList.add('col-md-2', 'col-sm-2');
+
+        let input = document.createElement('input');
+        input.classList.add('form-control')
+        input.setAttribute('type', 'number');
+        input.setAttribute('name', 'qte_compo[' + option.value + ']');
+        input.setAttribute('value', '0');
+        
+        div.appendChild(input);
+        option.remove();
+        search.value = "";
+        resetSelect(true);
+        setSize();
+        node.appendChild(label);
+        node.appendChild(div);
+        form.insertBefore(node, button);
+    }
+
+    function hideSelects(searchtext) {
+        let escapedText = RegExp.escape(searchtext);
+        let re = new RegExp(".*" + escapedText + ".*", 'i');
+        let selectOptions = Array.from(select.children);
+        let i = 0;
+        let val = null;
+        selectOptions.map((e) => {
+            if (re.test(e.innerText)) {
+                e.classList.remove('input-hidden');
+                val = e.getAttribute("value");
+                i++
             }
+            else {
+                e.classList.add('input-hidden');
+            }
+        })
+        setSize(i);
+        if (i === 1) {
+            select.value = val;
+        }
+        else {
+            resetSelect();
+        }
+    }
 
-            search.addEventListener('input', (event) => hideSelects(event.target.value));
-        </script>
-    @endsection
-@endif
+    function resetSelect(complete = false) {
+        select.value = "";
+        if (complete) {
+            let array = Array.from(select.children);
+            array.map((e) => e.classList.remove('input-hidden'))
+        }
+    }
+
+    function setSize(int = 4) {
+        let min = 4;
+        select.setAttribute('size', Math.min(min, int).toString());
+    }
+
+    search.addEventListener('input', (event) => hideSelects(event.target.value))
+</script>
+@endsection

@@ -32,8 +32,6 @@ Route::get('/modifierCompoMed/{idMed}', [MedicamentController::class, 'updateCom
 
 Route::post('/validerCompo', [MedicamentController::class, 'validateCompoMed']);
 
-Route::get('/ajouterCompoMed/{idMed}', [MedicamentController::class, 'addCompoMed'])->name('ajouterCompoMed');
-
 Route::get('/supprimerCompoMed/{idMed}/{idCompo}', [MedicamentController::class, 'removeCompoMed'])->name('supprimerCompoMed');
 
 Route::get('/getMedicaments', [MedicamentController::class, 'getMedicaments']);
@@ -54,7 +52,7 @@ Route::post('/validerRapport', [RapportController::class, 'validateRapport']);
 
 Route::get('/viewMedicamentOffert/{idRapp}', [RapportController::class, 'afficheMedocOffert']);
 
-Route::get('/modifierMedocOffert/{idRap}', [RapportController::class, 'modifierMedocOffert'])->name('modifierMedocOffert');
+Route::get('/modifierMedocOffert/{idRap}', [RapportController::class, 'updateMedocOffert'])->name('modifierMedocOffert');
 
 Route::post('/validerMedocOffert', [RapportController::class, 'validateMedocOffert']);
 
