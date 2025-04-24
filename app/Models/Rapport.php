@@ -27,7 +27,7 @@ class Rapport extends Model
     public function medicaments(): BelongsToMany
     {
         return $this->belongsToMany(
-            Rapport::class,
+            Medicament::class,
             'offrir',
             'id_rapport',
             'id_medicament'
@@ -47,7 +47,7 @@ class Rapport extends Model
 
     public function removeMedocOfferte($id_medoc)
     {
-        $this->composants()->detach([$id_medoc]);
+        $this->medicaments()->detach([$id_medoc]);
     }
 
 }
