@@ -191,9 +191,20 @@ class RapportController extends Controller
         }
     }
 
-    public function removeMedocOffert(int $id_rapport, int $id_medoc): void
+    public function removeMedocOffert(int $id_rapport, int $id_medoc)
     {
+        $erreur = Session::get('erreur');
+        Session::forget('erreur');
+        try {
+            $serviceRapport = new ServiceRapport();
+            $rapport = $serviceRapport->getRapport($id_rapport);
+            $rapport->removeMedocOfferte($id_medoc);
+            return redirect('/viewMedicamentOffert/' . $id_rapport);
 
+        } catch (Exception $e) {
+            $erreur = $e->getMessage();
+            return view('vues/error', compact('erreur'));
+        }
     }
 
     private function getMedicamentsOffert(int $id_rapport)
