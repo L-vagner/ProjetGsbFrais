@@ -63,11 +63,13 @@ class RapportController extends Controller
 
             $mesPraticiens = $serviceRapport->getPraticiens();
             $mesVisiteurs = $serviceVisiteur->getVisiteurs();
+            $titre_vue = "Ajout de rapport visite";
             return view('vues/formEditRapport', compact(
                 'erreur',
                 'id_praticien',
                 'mesPraticiens',
-                'mesVisiteurs'
+                'mesVisiteurs',
+                'titre_vue'
             ));
         } catch (Exception $e) {
             $erreur = $e->getMessage();
@@ -86,12 +88,14 @@ class RapportController extends Controller
             $monRapport = $serviceRapport->getRapport($id_rapport);
             $mesPraticiens = $serviceRapport->getPraticiens();
             $mesVisiteurs = $serviceVisiteur->getVisiteurs();
+            $titre_vue = "Modification de rapport visite";
             return view('vues/formEditRapport', compact(
                 'erreur',
                 'id_rapport',
                 'monRapport',
                 'mesPraticiens',
-                'mesVisiteurs'
+                'mesVisiteurs',
+                'titre_vue'
             ));
 
         } catch (Exception $e) {
@@ -147,12 +151,21 @@ class RapportController extends Controller
         }
     }
 
-    public function addMedocOffert(int $id_rapport)
+    public function modifierMedocOffert(int $id_rapport)
     {
+        $erreur = Session::get('erreur');
+        Session::forget('erreur');
         try {
             $mesMedocs = $this->getMedicamentsOffert($id_rapport);
+            $serviceMedicaments = new ServiceMedicament();
+            $missingMedicaments = $serviceMedicaments->getMissingMedicamentOffert($id_rapport);
 
-            return view('vues/', compact('mesMedocs', 'id_rapport'));
+            return view('vues/formEditMedocs', compact(
+                'mesMedocs',
+                'id_rapport',
+                'missingMedicaments',
+                'erreur'
+            ));
         } catch (Exception $e) {
             $erreur = $e->getMessage();
             return view('vues/error', compact('erreur'));
@@ -161,7 +174,21 @@ class RapportController extends Controller
 
     public function validateMedocOffert(Request $request)
     {
+        $erreur = Session::get('erreur');
+        Session::forget('erreur');
 
+        $qteOffertes = $request->input('qte_offerte');
+        $id_rap = $request->input('id_rap');
+        try {
+            $serviceRapport = new ServiceRapport();
+            $rapport = $serviceRapport->getRapport($id_rap);
+            $rapport->updateQteOfferte($qteOffertes);
+
+            return redirect('/viewMedicamentOffert/' . $id_rap);
+        } catch (Exception $e) {
+            $erreur = $e->getMessage();
+            return view('vues/error', compact('erreur'));
+        }
     }
 
     public function removeMedocOffert(int $id_rapport, int $id_medoc): void

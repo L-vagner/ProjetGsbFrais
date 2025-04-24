@@ -11,6 +11,7 @@
             }
     @endphp
     <div class="col-md-20  col-sm-16 well well-md">
+        <h1>{{$titre_vue}}</h1>
         <div class="form-horizontal">
             <input type="hidden" name="id_rapport" value="{{$id_rapport ?? 0}}"/>
 
