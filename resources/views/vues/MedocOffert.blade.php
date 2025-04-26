@@ -26,7 +26,9 @@
             <small>
                 Quantité offerte: {{$medoc->qte_offerte}}
             </small>
-            <a href="/supprimerMedocOffert/{{$monRapport->id_rapport}}/{{$medoc->id_medicament}}">
+            <a
+                onclick="javascript:if(confirm('Vous êtes sûr ?'))
+                                window.location='/supprimerMedocOffert/{{ $monRapport->id_rapport }}/{{ $medoc->id_medicament }}';">
                 <span class="glyphicon glyphicon-trash"></span>
             </a>
         </h4>

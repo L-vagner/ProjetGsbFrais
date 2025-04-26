@@ -19,7 +19,8 @@
                 {{$composant->pivot->qte_composant}}
             </td>
             <td style="text-align:center;">
-                <a href="{{route('supprimerCompoMed', [$medicament->id_medicament, $composant->id_composant])}}">
+                <a onclick="javascript:if(confirm('Vous êtes sûr ?'))
+                            window.location='{{route('supprimerCompoMed', [$medicament->id_medicament, $composant->id_composant])}}';">
                     <span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="top"
                         title="Supprimer"></span>
                 </a>
