@@ -6,7 +6,7 @@
         <th style="width:30%">Depot légal</th>
         <th style="width:30%">Nom commercial</th>
         <th style="width:20%">Famille</th>
-        <th style="width:20%">Prix echantillion</th>
+        <th style="width:20%">Prix echantillon</th>
         <th style="width: 10%">Composants</th>
         </thead>
         @foreach($mesMedocs as $medoc)
