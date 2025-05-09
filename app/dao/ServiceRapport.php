@@ -91,4 +91,14 @@ class ServiceRapport
         }
     }
 
+    public function removeRapport($id_rapport): void
+    {
+        try {
+            $rapport = Rapport::firstWhere('id_rapport', $id_rapport);
+            $rapport->delete();
+        } catch (QueryException $e) {
+            throw new MonException($e->getMessage(), 5);
+        }
+    }
+
 }

@@ -117,12 +117,27 @@ class RapportController extends Controller
             $motif = $request->input('motif');
 
             $serviceRapport = new ServiceRapport();
-            if ($id_rapport < 0) {
+            if ($id_rapport <= 0) {
                 $serviceRapport->insertRapport($id_praticien, $id_visiteur, $date, $bilan, $motif);
             } else {
                 $serviceRapport->updateRapport($id_rapport, $id_praticien, $id_visiteur, $date, $bilan, $motif);
             }
 
+            return redirect('/getRapport');
+
+        } catch (Exception $e) {
+            $erreur = $e->getMessage();
+            return view('vues/error', compact('erreur'));
+        }
+    }
+
+    public function removeRapport(int $id_rapport)
+    {
+        $erreur = Session::get('erreur');
+        Session::forget('erreur');
+        try {
+            $serviceRapport = new ServiceRapport();
+            $serviceRapport->removeRapport($id_rapport);
             return redirect('/getRapport');
 
         } catch (Exception $e) {

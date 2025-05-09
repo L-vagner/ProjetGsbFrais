@@ -48,6 +48,8 @@ Route::get('/addRapport', [RapportController::class, 'addRapport'])->name("ajout
 
 Route::get('/updateRapport/{idRapp}', [RapportController::class, 'updateRapport'])->name('updateRapport');
 
+Route::get('/supprimerRapport/{idRapp}', [RapportController::class, 'removeRapport'])->name('supprimerRapport');
+
 Route::post('/validerRapport', [RapportController::class, 'validateRapport']);
 
 Route::get('/viewMedicamentOffert/{idRapp}', [RapportController::class, 'afficheMedocOffert']);

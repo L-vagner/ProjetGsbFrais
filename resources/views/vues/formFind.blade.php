@@ -42,7 +42,7 @@
                             @endforeach
                         </select>
                     @elseif ($search == "rapport")
-                                <select class="form-select" name="id_rap" id="select" size="3" required>
+                                <select class="form-select" name="id_rap" id="select" size="4" required>
                                     <option value="" id="disabled" style="display: none" disabled selected></option>
                                     @foreach($formOptions as $option)
 
@@ -74,7 +74,7 @@
             <div class="form-group">
                 <div class="col-md-6 col-md-offset-3 col-md-3">
                     <button type="submit" class="btn btn-default btn-primary"><span
-                            class="glyphicon glyphicon-log-in"></span> 
+                            class="glyphicon glyphicon-log-in"></span>
                             @if($search == "rapport")
                             Modifier
                             @else
@@ -106,7 +106,7 @@
                 min = 5;
                 break;
             case "rapport":
-                min = 3;
+                min = 4;
                 break;
         }
 
@@ -136,7 +136,7 @@
             if (i === 1) {
                 select.value = val;
                 if (witch === "rapport") {
-                    setLink(val)
+                    setLink(val);
                 }
 
             } else {

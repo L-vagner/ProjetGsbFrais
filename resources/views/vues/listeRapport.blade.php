@@ -21,6 +21,7 @@
             <th style="width:20%">Motif</th>
             <th>Médicaments offerts</th>
             <th>Modifier</th>
+            <th>Supprimer</th>
         </tr>
         </thead>
         @foreach($mesRapports as $rapport)
@@ -45,6 +46,14 @@
                     <a href="{{route('updateRapport', [$rapport->id_rapport])}}">
                     <span class="glyphicon glyphicon-pencil" data-toggle="tooltip" data-placement="top"
                           title="Modifier">
+                    </span>
+                    </a>
+                </td>
+                <td style="text-align:center;">
+                    <a onclick="javascript:if(confirm('Vous êtes sûr ?'))
+                    window.location='{{route('supprimerRapport', [$rapport->id_rapport])}}';">
+                    <span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="top"
+                          title="Supprimer">
                     </span>
                     </a>
                 </td>
